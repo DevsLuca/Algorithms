@@ -1,3 +1,5 @@
+```mermaid
+
 flowchart TD
 
 START((Start trasferimento))
@@ -59,3 +61,5 @@ end
 I1 --> J1 --> J2 --> J3 --> END
 
 END((Fine processo))
+
+```
