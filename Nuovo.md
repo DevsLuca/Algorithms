@@ -1,55 +1,46 @@
 ```mermaid
 
 flowchart TD
-%% ===============================
-%% SWIMLANE PER RUOLI: LOC / DIR / POSTO DI CONTROLLO
-%% ===============================
+%% SWIMLANE PER RUOLI OTTIMIZZATA
 
-%% ===============================
-%% START
 START((Start Trasferimento))
 
-%% ===============================
 %% LOC
 subgraph LOC [LOC]
-    A1[Pianifica trasferimento: tipo e quantità]
-    A2[Informa DIR della necessità]
-    F1[Operai caricano materiale sui muletti]
-    F2[Registrazione uscita TRACO in prossimità porta uscita]
-    F3[Caricamento materiale nel montacarichi]
-    J1[Registrazione materiale TRACO in entrata]
+    L1[Pianifica trasferimento]
+    L2[Informa DIR]
+    L3[Caricamento muletti]
+    L4[Registrazione uscita TRACO]
+    L5[Caricamento montacarichi]
+    L6[Registrazione entrata TRACO]
 end
 
-%% ===============================
 %% DIR
 subgraph DIR [DIR]
-    B1[Richiede abilitazioni locale partenza e montacarichi]
-    D1{Locale destinazione aperto contemporaneamente?}
-    E1[Richiede abilitazioni locale destinazione]
-    J2[Controfirma registrazione materiale entrato]
-    J3[Chiusura porte secondo procedure sicurezza]
+    D1[Richiesta abilitazioni partenza e montacarichi]
+    D2{Locale destinazione aperto?}
+    D3[Richiesta abilitazioni destinazione]
+    D4[Controfirma registrazione]
+    D5[Chiusura porte]
 end
 
-%% ===============================
 %% POSTO DI CONTROLLO
 subgraph PC [Posto di Controllo]
-    B2{Abilitazioni concesse?}
-    E2[Apri porta locale destinazione con chiavi LOC + DIR]
+    P1{Abilitazioni concesse?}
+    P2[Apri porta destinazione]
 end
 
-%% ===============================
-%% FLUSSO
-START --> A1 --> A2 --> B1 --> B2
-B2 -- NO --> STOP1[Sospensione operazioni] --> END
-B2 -- SI --> F1
+%% FLUSSO LINEARE
+START --> L1 --> L2 --> D1 --> P1
+P1 -- NO --> STOP[Sospensione operazioni] --> END
+P1 -- SI --> L3 --> L4 --> L5 --> D2
 
-F1 --> F2 --> F3 --> D1
-D1 -- SI --> E1 --> E2 --> F3
-D1 -- NO --> F3
+D2 -- SI --> D3 --> P2 --> L5
+D2 -- NO --> L5
 
-F3 --> G1{Altri viaggi necessari?}
-G1 -- SI --> F1
-G1 -- NO --> J1 --> J2 --> J3 --> END
+L5 --> G1{Altri viaggi?}
+G1 -- SI --> L3
+G1 -- NO --> L6 --> D4 --> D5 --> END
 
 END((Fine processo))
 
