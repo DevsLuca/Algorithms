@@ -33,9 +33,10 @@ end
 %% FLUSSO LINEARE
 START --> L1 --> L2 --> D1 --> P1
 P1 -- NO --> STOP[Sospensione operazioni] --> END
-P1 -- SI --> L3 --> L4 --> L5 --> D2
+P1 -- SI --> L3 --> L4
 
 D2 -- SI --> D3 --> P2 --> L5
+
 D2 -- NO --> L5
 
 L5 --> G1{Altri viaggi?}
