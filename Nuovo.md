@@ -1,4 +1,4 @@
-```mairmaid
+```mermaid
 
 flowchart TD
 %% ===============================
